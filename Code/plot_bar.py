@@ -3,23 +3,13 @@ import pandas
 import matplotlib.pyplot as plt
 
 
-file_name = 'MCF10AUnique.xlsx'
+file_name = '../Data/MCF10AUnique.xlsx'
 n_measurements = 6
 xl = pandas.ExcelFile(file_name)
-
-
-
-# values = df['Arm_id'].values
-#get a data frame with selected columns
-# FORMAT = ['Arm_id', 'DSPName', 'Pincode']
-# df_selected = df[FORMAT]
-
 
 index = np.arange(n_measurements)
 total_rows = xl.book.sheet_by_index(0).nrows
 df = xl.parse()
-# print df.columns
-# print df[df.columns[0]]
 gene_list = [[] for i in range(total_rows-1)]
 counter = 0
 gene_names = df[df.columns[0]].values
@@ -35,13 +25,11 @@ for i in np.arange(0,n_measurements):
 
   counter +=3
 
-print "done"
+print "done Loading data"
 
 
-
-index = np.arange(n_measurements)
+# Plotting details
 bar_width = 0.35
-
 opacity = 0.4
 error_config = {'ecolor': '0.3'}
 
@@ -55,8 +43,8 @@ for i in np.arange(total_rows-1):
                    color='b',
                    yerr=stds,
                    error_kw=error_config)
-
-  save_file = gene_names[i] + '.png'
+  plt.title(gene_names[i])
+  save_file = '../Results/'+ gene_names[i] + '.png'
   plt.savefig(save_file)
   plt.close(fig)
   # plt.show()
